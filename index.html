@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inversión Blindada | Edgardo de Real | Grupo Salo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #c5a059;
+            --gold-hover: #e0b970;
+            --dark-bg: #0a0c10;
+            --deep-blue: #0d1117; 
+            --card-bg: #161b22;
+            --text-light: #f0f2f5;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --whatsapp-green: #25d366;
+            --urgency-red: #ff4d4d;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Header Links */
+        .header-brand {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .user-photo-link { display: flex; align-items: center; transition: transform 0.3s ease; text-decoration: none; }
+        .user-photo-link:hover { transform: scale(1.05); }
+
+        .user-photo {
+            width: 55px; height: 55px;
+            border-radius: 50%; object-fit: cover;
+            opacity: 0.8; border: 1px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+        .user-photo-link:hover .user-photo { opacity: 1; box-shadow: 0 0 15px rgba(197, 160, 89, 0.4); }
+
+        .salo-link { display: flex; align-items: center; transition: opacity 0.3s ease; }
+        .salo-link:hover { opacity: 0.8; }
+        .salo-logo { height: 40px; width: auto; }
+
+        .whatsapp-float {
+            position: fixed;
+            width: 60px; height: 60px; bottom: 40px; right: 40px;
+            background-color: var(--whatsapp-green);
+            color: #FFF; border-radius: 50px; text-align: center;
+            font-size: 35px; box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+            z-index: 100; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.3s ease;
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .hero {
+            height: 100vh; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: #fff; padding: 0 20px;
+            overflow: hidden; background-color: var(--deep-blue);
+        }
+
+        .video-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .video-background iframe {
+            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(13, 17, 23, 0.5), rgba(10, 12, 16, 0.8));
+            z-index: 1;
+        }
+
+        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        .hero-text-box {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 40px; border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.3rem, 5vw, 4rem); margin: 0 0 15px 0; line-height: 1.1; }
+        .highlight { color: var(--gold); }
+        .tagline { font-size: clamp(0.8rem, 1.8vw, 1rem); font-weight: 300; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; display: block; color: var(--gold); }
+        .hero-description { font-size: clamp(0.9rem, 2vw, 1.2rem); font-weight: 300; line-height: 1.6; max-width: 650px; margin: 0 auto 30px auto; }
+
+        .btn-gold {
+            display: inline-block; padding: 16px 30px; background: var(--gold); color: #000;
+            font-weight: 700; text-decoration: none; border-radius: 5px; text-transform: uppercase;
+            transition: all 0.3s ease; font-size: 0.8rem; letter-spacing: 1px; border: none;
+        }
+        .btn-gold:hover { background: var(--gold-hover); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); }
+
+        /* CARRUSEL INFINITO CORREGIDO */
+        .logo-carousel-section { padding: 40px 0; background: #07090d; border-bottom: 1px solid var(--border); overflow: hidden; text-align: center; }
+        .logo-carousel { overflow: hidden; margin-bottom: 15px; white-space: nowrap; position: relative; }
+        .logo-track { display: flex; width: max-content; animation: scroll 25s linear infinite; gap: 80px; align-items: center; padding: 0 40px; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .logo-track img { height: 45px; filter: brightness(1.5); opacity: 0.8; transition: 0.3s; flex-shrink: 0; }
+        .partners-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); font-weight: 400; }
+
+        .projects { padding: 80px 20px; background: var(--deep-blue); }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h2.section-title { text-align: center; font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--gold); margin-bottom: 10px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 50px; }
+        .project-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: all 0.4s ease; display: flex; flex-direction: column; position: relative; }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 12px 25px rgba(0,0,0,0.4); }
+        .project-image { height: 200px; width: 100%; background-size: cover; background-position: center; position: relative; }
+        
+        .price-badge { position: absolute; bottom: 12px; right: 12px; background: var(--gold); color: #000; padding: 6px 12px; font-weight: 700; font-size: 0.85rem; border-radius: 4px; z-index: 2; }
+        .urgency-label { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.7); color: var(--urgency-red); padding: 5px 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; border: 1px solid var(--urgency-red); backdrop-filter: blur(5px); z-index: 2; }
+
+        .project-info { padding: 25px; flex-grow: 1; }
+        .project-info h3 { color: var(--gold); margin: 0 0 5px 0; font-size: 1.4rem; }
+        .location { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 15px; display: block; }
+        .project-features { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--text-light); border-top: 1px solid var(--border); padding-top: 15px; }
+        .project-features li { margin-bottom: 8px; display: flex; align-items: center; }
+        .project-features li::before { content: "✓"; color: var(--gold); margin-right: 8px; font-weight: bold; }
+
+        .faq-section { padding: 80px 20px; background: var(--deep-blue); }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { margin-bottom: 15px; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); overflow: hidden; }
+        .faq-question { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--gold); }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+        .faq-item.active .faq-answer { padding: 0 20px 20px 20px; max-height: 250px; }
+
+        .contact-section { padding: 80px 20px; background: var(--dark-bg); }
+        .form-box { max-width: 550px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: 12px; border: 1px solid var(--border); }
+        .form-box h2 { text-align: center; font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin-bottom: 8px; }
+        input, select { width: 100%; padding: 16px; background: #0d1117; border: 1px solid var(--border); color: white; border-radius: 4px; font-size: 0.95rem; font-family: 'Montserrat', sans-serif; margin-bottom: 15px; }
+
+        footer { text-align: center; padding: 60px 20px; background: #0d1117; border-top: 1px solid var(--border); }
+        .footer-link { display: inline-block; text-decoration: none; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 5px 2px; position: relative; }
+        .footer-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0; background-color: currentColor; transition: width 0.3s ease; }
+        .footer-link:hover::after { width: 100%; }
+        .footer-link.edgardo { color: var(--gold); font-weight: 600; }
+        .footer-link.edgardo:hover { text-shadow: 0 0 8px rgba(197, 160, 89, 0.5); transform: translateY(-2px); }
+        .footer-link.salo { color: var(--text-light); font-weight: 600; }
+        .footer-link.salo:hover { text-shadow: 0 0 8px rgba(240, 242, 245, 0.3); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <a href="https://wa.me/529981550066?text=Te%20contacto%20de%20tu%20pagina%20web!" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <header class="hero">
+        <div class="header-brand">
+            <a href="https://www.instagram.com/edgardodereal_/" target="_blank" class="user-photo-link">
+                <img src="https://i.ibb.co/q6VmVZ6/perfil-edgardodereal.png" alt="Edgardo de Real" class="user-photo">
+            </a>
+            <a href="https://gruposalo.com" target="_blank" class="salo-link">
+                <img src="https://gruposalo.com/wp-content/uploads/2025/06/logo.png" alt="Grupo Salo Inmobiliario" class="salo-logo">
+            </a>
+        </div>
+
+        <div class="video-background">
+            <iframe 
+                src="https://www.youtube.com/embed/IGSIDUTqyo4?si=6-fz1Oq3uL87uN0H&autoplay=1&mute=1&loop=1&playlist=IGSIDUTqyo4&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&fs=0&playsinline=1&enablejsapi=1" 
+                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </div>
+        <div class="video-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="hero-text-box">
+                <span class="tagline">Edgardo de Real | Grupo Salo Inmobiliario</span>
+                <h1>Inversión <span class="highlight">Blindada</span></h1>
+                <p class="hero-description">Reduce el riesgo de tus inversiones.<br><br>Nosotros auditamos los proyectos, tú disfruta del crecimiento de tu patrimonio.</p>
+                <a href="#contacto" class="btn-gold">Solicitar Oportunidades Auditadas</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-carousel-section">
+        <div class="logo-carousel">
+            <div class="logo-track">
+                <img src="https://socasesores.com/oficinas/img/soc_blanco.png" alt="SOC">
+                <img src="https://bunkerpdc.com/wp-content/uploads/2024/04/Bunker-Logo_Naranja_Blanco.webp" alt="Bunker">
+                <img src="https://sedetus.qroo.gob.mx/wp-content/uploads/2024/05/cropped-SEDETUS.png" alt="Sedetus">
+                <img src="https://www.dintsa.mx/img/logo.svg?v=1711405477" alt="Dintsa">
+                <img src="https://www.murano.com.mx/static/images/utils/logo-dark.png" alt="Murano">
+                <img src="https://socasesores.com/oficinas/img/soc_blanco.png" alt="SOC">
+                <img src="https://bunkerpdc.com/wp-content/uploads/2024/04/Bunker-Logo_Naranja_Blanco.webp" alt="Bunker">
+                <img src="https://sedetus.qroo.gob.mx/wp-content/uploads/2024/05/cropped-SEDETUS.png" alt="Sedetus">
+                <img src="https://www.dintsa.mx/img/logo.svg?v=1711405477" alt="Dintsa">
+                <img src="https://www.murano.com.mx/static/images/utils/logo-dark.png" alt="Murano">
+            </div>
+        </div>
+        <div class="partners-label">nuestros socios comerciales</div>
+    </div>
+
+    <section class="projects">
+        <div class="container">
+            <h2 class="section-title">Oportunidades Auditadas</h2>
+            <div class="grid">
+                <div class="project-card">
+                    <span class="urgency-label">última torre disponible</span>
+                    <div class="project-image" style="background-image: url('https://www.dintsa.mx/img/uploads/valle-aurora-cancun/valle-aurora-cancun-descripcion.jpg');">
+                        <span class="price-badge">Desde $3.6 MDP</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Valle Aurora</h3>
+                        <span class="location">Cancún</span>
+                        <ul class="project-features">
+                            <li>Preventa y entrega inmediata</li>
+                            <li>Tasa 0% de interés</li>
+                            <li>Altos margenes de plusvalía</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <span class="urgency-label">precios amigos y familia acaban pronto</span>
+                    <div class="project-image" style="background-image: url('https://www.dintsa.mx/img/uploads/aurora-towers/galeria/g02-aurora-towers-frontal.jpg?v=1750202904');">
+                        <span class="price-badge">Desde $3.1 MDP</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Aurora Towers</h3>
+                        <span class="location">Cancún</span>
+                        <ul class="project-features">
+                            <li>Aun a tiempo para lista de precios amigos y familia</li>
+                            <li>Tasa 0% de interés</li>
+                            <li>Estilo de vida resort</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <span class="urgency-label">precios de lista por subir</span>
+                    <div class="project-image" style="background-image: url('https://bvgcancun.com.mx/img/Slide-1-2-1.png');">
+                        <span class="price-badge">Desde $598,646 USD</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Bay View Grand</h3>
+                        <span class="location">Zona Hotelera Cancún</span>
+                        <ul class="project-features">
+                            <li>Preventa Luxury</li>
+                            <li>Las mejores vistas de todo cancún</li>
+                            <li>Exclusividad AAA</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <span class="urgency-label">entrega inmediata</span>
+                    <div class="project-image" style="background-image: url('https://www.dintsa.mx/img/uploads/lomas-aurora/galeria/img-lomas-03.jpg?v=1740096315');">
+                        <span class="price-badge">Desde $3.4 MDP</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Lomas Aurora</h3>
+                        <span class="location">Playa del Carmen</span>
+                        <ul class="project-features">
+                            <li>Departamentos y terrenos</li>
+                            <li>Tasa 0% de interés</li>
+                            <li>Eleva los estándares de vida de Playa del Carmen</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <span class="urgency-label">el lujo se acaba pronto</span>
+                    <div class="project-image" style="background-image: url('https://theresidencesatgrandisland.com/img/banner-3.png');">
+                        <span class="price-badge">Desde $591,675 USD</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>The Residences</h3>
+                        <span class="location">by Grand Island, Cancún</span>
+                        <ul class="project-features">
+                            <li>Preventa Exclusiva</li>
+                            <li>Tasa 0% de interés</li>
+                            <li>Servicios de hotel 5 estrellas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="faq-container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <div class="faq-item">
+                <div class="faq-question">¿Qué es exactamente una Inversión Blindada? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Es una metodología de inversión donde auditamos legal, técnica y financieramente cada proyecto antes de ofrecértelo, reduciendo el riesgo al mínimo.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Qué beneficios tiene la Tasa 0% de interés? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Te permite financiar tu unidad directamente con el desarrollador durante el proceso de construcción, sin generar intereses bancarios adicionales, maximizando tu utilidad.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Cuáles son las formas de pago? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Nuestro esquema principal consiste en un 30% de enganche inicial, permitiéndote liquidar el porcentaje restante a través de cómodas mensualidades a tasa 0% de interés durante la construcción o contra entrega con capital propio o crédito bancario.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">¿Cómo aseguran la plusvalía de los proyectos? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Seleccionamos ubicaciones estratégicas con infraestructura garantizada y precios de lista "Amigos y Familia" para asegurar el mayor margen de crecimiento.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contact-section">
+        <div class="form-box">
+            <h2>Solicita una asesoría 1 a 1 conmigo</h2>
+            <form action="https://formspree.io/f/xnjlqlgb" method="POST">
+                <input type="text" name="Nombre" placeholder="Nombre Completo" required>
+                <input type="email" name="_replyto" placeholder="Correo Corporativo" required>
+                <input id="phone" type="tel" name="WhatsApp" required>
+                <select name="Rango_Inversion" required>
+                    <option value="" disabled selected>Rango de inversión de interés</option>
+                    <option value="1-2M">1 a 2 millones</option>
+                    <option value="2-3M">2 a 3 millones</option>
+                    <option value="3-4M">3 a 4 millones</option>
+                    <option value="4-5M">4 a 5 millones</option>
+                    <option value="5-6M">5 a 6 millones</option>
+                    <option value="6-7M">6 a 7 millones</option>
+                    <option value="7-8M">7 a 8 millones</option>
+                    <option value="8-9M">8 a 9 millones</option>
+                    <option value="9-10M">9 a 10 millones</option>
+                    <option value="10M+">10 millones o más</option>
+                </select>
+                <select name="Proyecto_de_Interes">
+                    <option value="" disabled selected>Proyecto de interés principal</option>
+                    <option value="Valle Aurora">Valle Aurora</option>
+                    <option value="Aurora Towers">Aurora Towers</option>
+                    <option value="Bay View Grand">Bay View Grand</option>
+                    <option value="Lomas Aurora">Lomas Aurora</option>
+                    <option value="The Residences">The Residences</option>
+                    <option value="Copropiedad">Me interesa recibir información sobre copropiedad</option>
+                </select>
+                <button type="submit" class="btn-gold" style="width: 100%; cursor: pointer;">Enviar solicitud</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>
+                <a href="https://www.instagram.com/edgardodereal_/" target="_blank" class="footer-link edgardo">Edgardo de Real</a> 
+                <span style="color: var(--border); margin: 0 10px;">|</span> 
+                <a href="https://gruposalo.com" target="_blank" class="footer-link salo">Grupo Salo Inmobiliario</a>
+            </p>
+            <p style="letter-spacing: 2px; font-size: 0.7rem; text-transform: uppercase; margin-top: 15px; color: var(--gold); font-weight: 300;">Especialista en Inversión Blindada en Bienes Raíces.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        const phoneInputField = document.querySelector("#phone");
+        window.intlTelInput(phoneInputField, {
+            initialCountry: "mx",
+            preferredCountries: ["mx", "us", "ca", "es"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
